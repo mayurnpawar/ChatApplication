@@ -1,12 +1,30 @@
 const express = require('express');
+const http = require('http');
 const path = require('path');
+const socketIO = require('socket.io');
+
 const port = process.env.PORT || 3000;
 const publicpath =  path.join(__dirname,'../public');
 var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
 app.use(express.static(publicpath));
 
+io.on('connection',(socket)=>{
+ console.log('New User Connected');
 
-app.listen(port,()=>{
+ socket.emit('newEmail',{
+   From : 'mayurnpawar@gmail.com',
+   Subject : 'How r you',
+   Received : 23432
+ });
+ socket.on('disconnect',()=>{
+ console.log('User was disconnected');
+ });
+});
+
+
+server.listen(port,()=>{
   console.log(`Server has been started and running on ${port}`);
 });
