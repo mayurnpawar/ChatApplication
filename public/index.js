@@ -5,16 +5,16 @@ socket.on('connect',function() {
   });
 
 socket.emit('createMessage',{
-    To: 'Mayur',
-    Text : 'Hey How R U'
+    from: 'Mayur',
+    text : 'Hey How R U'
   });
 socket.on('disconnect',function() {
   console.log('Disconneced from server');
 });
 
-socket.on('newEmail', function(email){
- console.log('New eMail',email);
-});
-socket.on('newMessage', function(Text){
- console.log('New Message Created',Text);
+// socket.on('newEmail', function(email){
+//  console.log('New eMail',email);
+// });
+socket.on('newMessage', function(TextMessage){
+ console.log('New Message Created',TextMessage);
 });

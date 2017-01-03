@@ -18,12 +18,16 @@ io.on('connection',(socket)=>{
  //   Subject : 'How r you',
  //   Received : 23432
  // });
- socket.emit('newMessage' , {
-   Text : 'Hey I am fine',
-   CreatedAt : 'Now'
- });
+ // socket.emit('newMessage' , {
+ //   Text : 'Hey I am fine',
+ //   CreatedAt : 'Now'
+ // });
  socket.on('createMessage',(TextData)=>{
-   console.log(`Text Recevied from Client : ${TextData.Text}`);
+     io.emit('newMessage' , {
+     from : TextData.from,
+     text : TextData.text,
+     CreatedAt : new Date().getTime()
+   });
  });
  socket.on('disconnect',()=>{
  console.log('User was disconnected');
