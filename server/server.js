@@ -18,10 +18,18 @@ io.on('connection',(socket)=>{
  //   Subject : 'How r you',
  //   Received : 23432
  // });
- // socket.emit('newMessage' , {
- //   Text : 'Hey I am fine',
- //   CreatedAt : 'Now'
- // });
+ socket.emit('newMessage' , {
+ from : 'Admin',
+ text : 'Welcome to chat application',
+ CreatedAt : new Date().getTime()
+});
+
+socket.broadcast.emit('newMessage' , {
+from : 'Admin',
+text : 'New User Joined our chat application',
+CreatedAt : new Date().getTime()
+});
+
  socket.on('createMessage',(TextData)=>{
      io.emit('newMessage' , {
      from : TextData.from,
