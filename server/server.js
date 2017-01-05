@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
+const {generateMessage} = require('./utils/message.js');
 
 const port = process.env.PORT || 3000;
 const publicpath =  path.join(__dirname,'../public');
@@ -18,24 +19,11 @@ io.on('connection',(socket)=>{
  //   Subject : 'How r you',
  //   Received : 23432
  // });
- socket.emit('newMessage' , {
- from : 'Admin',
- text : 'Welcome to chat application',
- CreatedAt : new Date().getTime()
-});
-
-socket.broadcast.emit('newMessage' , {
-from : 'Admin',
-text : 'New User Joined our chat application',
-CreatedAt : new Date().getTime()
-});
+ socket.emit('newMessage' ,generateMessage('Admin','Welcome to chat application'));
+ socket.broadcast.emit('newMessage' ,generateMessage('Admin','New User Joined our chat application'));
 
  socket.on('createMessage',(TextData)=>{
-     io.emit('newMessage' , {
-     from : TextData.from,
-     text : TextData.text,
-     CreatedAt : new Date().getTime()
-   });
+     io.emit('newMessage' , generateMessage(TextData.from,TextData.text));
  });
  socket.on('disconnect',()=>{
  console.log('User was disconnected');
