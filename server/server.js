@@ -22,8 +22,10 @@ io.on('connection',(socket)=>{
  socket.emit('newMessage' ,generateMessage('Admin','Welcome to chat application'));
  socket.broadcast.emit('newMessage' ,generateMessage('Admin','New User Joined our chat application'));
 
- socket.on('createMessage',(TextData)=>{
+ socket.on('createMessage',(TextData,callback)=>{
+     console.log('Message Recevived');
      io.emit('newMessage' , generateMessage(TextData.from,TextData.text));
+     callback('Meesga created successfully');
  });
  socket.on('disconnect',()=>{
  console.log('User was disconnected');
